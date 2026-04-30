@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08060f" />
+  <meta name="description" content="NightDrop — Bier, sterke drank en snacks bezorgd in Nijmegen. Vanaf 22:00 tot 04:00. Cash bij levering." />
+  <title>NightDrop · Nachtbezorging in Nijmegen — Bier, Drank & Snacks</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%2325D366'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%23080612'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' dominant-baseline='middle' font-size='40' fill='url(%23g)'%3E🌙%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ TOP URGENCY BAR ============ -->
+  <div class="urgency-bar" id="urgencyBar">
+    <span class="pulse-dot"></span>
+    <span class="urgency-text">
+      Sluit over <strong><span id="countdown">--:--</span></strong>
+    </span>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <a href="#" class="logo" aria-label="NightDrop">
+      <span class="logo-icon">🌙</span>
+      <span class="logo-text">NIGHT<span class="logo-accent">DROP</span></span>
+    </a>
+    <div class="status-pill" id="statusPill">
+      <span class="dot"></span>
+      <span id="statusText">OPEN · 30 min</span>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot live"></span>
+        <span><strong id="liveOrders">12</strong> mensen bestellen nu</span>
+      </div>
+      <h1 class="hero-title">
+        Nachtleven,<br />
+        <span class="gradient-text">geleverd in 30 min.</span>
+      </h1>
+      <p class="hero-sub">
+        Bier · drank · snacks — geleverd in heel Nijmegen, 22:00 – 04:00.
+      </p>
+      <div class="hero-cta-row">
+        <button type="button" class="cta cta-whatsapp cta-glow" id="heroBuilder">
+          <span class="cta-icon">⚡</span>
+          <span>Bestel in 30 seconden</span>
+        </button>
+        <a href="#bundels" class="cta cta-ghost">Bekijk menu</a>
+      </div>
+      <div class="ticker" id="liveTicker">
+        <span class="ticker-track" id="tickerTrack"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NAV TABS ============ -->
+  <nav class="tabs" id="tabs">
+    <a href="#bundels" class="tab tab-active" data-tab="bundels"><span>🎉</span> Bundels</a>
+    <a href="#snel" class="tab" data-tab="snel"><span>⚡</span> Snel</a>
+    <a href="#drank" class="tab" data-tab="drank"><span>🍺</span> Drank</a>
+    <a href="#snacks" class="tab" data-tab="snacks"><span>🍕</span> Snacks</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- ============ BUNDELS (HERO SECTION) ============ -->
+    <section id="bundels" class="section section-bundels">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>🎉 Bundels</h2>
+        </div>
+        <div class="section-tag">💸 −€20</div>
+      </div>
+      <div class="bundle-grid" id="bundleGrid"></div>
+    </section>
+
+    <!-- ============ SNEL KIEZEN ============ -->
+    <section id="snel" class="section">
+      <div class="section-head">
+        <div class="section-title"><h2>⚡ Snel kiezen</h2></div>
+      </div>
+      <div class="quick-grid" id="quickGrid"></div>
+    </section>
+
+    <!-- ============ DRANK ============ -->
+    <section id="drank" class="section">
+      <div class="section-head">
+        <div class="section-title"><h2>🍺 Drank</h2></div>
+      </div>
+      <div class="product-grid" id="drankGrid"></div>
+    </section>
+
+    <!-- ============ SNACKS & EXTRAS ============ -->
+    <section id="snacks" class="section">
+      <div class="section-head">
+        <div class="section-title"><h2>🍕 Snacks</h2></div>
+      </div>
+      <div class="product-grid" id="snackGrid"></div>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="section reviews-section">
+      <div class="section-head">
+        <div class="section-title"><h2>⭐ 4.8 / 5 · 1.842 reviews</h2></div>
+      </div>
+      <div class="review-grid" id="reviewGrid"></div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section how-section">
+      <div class="section-head">
+        <div class="section-title"><h2>🛵 Zo werkt het</h2></div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-icon">📱</div>
+          <h3>Tik op bestel</h3>
+          <p>WhatsApp opent met je bestelling ingevuld.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-icon">✅</div>
+          <h3>Wij bevestigen</h3>
+          <p>Bevestiging + ETA binnen 1 minuut.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-icon">🛵</div>
+          <h3>Aan de deur</h3>
+          <p>Cash bij levering. Klaar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq-section">
+      <div class="section-head">
+        <div class="section-title">
+          <h2>❓ Vragen</h2>
+        </div>
+      </div>
+      <div class="faq" id="faqList">
+        <details class="faq-item">
+          <summary>Hoe snel is de bezorging?</summary>
+          <p>Gemiddeld 30 minuten in heel Nijmegen. Op piekuren (00:00 – 02:00) kan het 45 minuten worden. Je krijgt altijd een ETA via WhatsApp.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Hoe betaal ik?</summary>
+          <p>Cash bij levering. Geen creditcard, geen Tikkie vooraf, geen gedoe. Je betaalt pas als de koerier voor je deur staat.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Wat zijn de openingstijden?</summary>
+          <p>Iedere avond van 22:00 tot 04:00. Vrijdag &amp; zaterdag tot 05:00. Laatste bestelling 30 min voor sluiting.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is er een minimumbestelling?</summary>
+          <p>Ja, minimaal €20. Bezorgkosten €5. Vanaf €50 is de bezorging gratis — daarom kiezen de meeste klanten een bundel.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Bezorgen jullie ook buiten Nijmegen?</summary>
+          <p>Niet standaard. Voor Lent, Oosterhout, Beuningen kan het soms — vraag het even via WhatsApp.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer-logo">🌙 NIGHT<span>DROP</span></div>
+      <p class="footer-tag">Nachtbezorging Nijmegen · 18+ · Drink met mate.</p>
+      <p class="footer-meta">Iedere avond 22:00 – 04:00 · Cash bij levering · WhatsApp only</p>
+      <p class="footer-disclaimer">Geen verkoop aan minderjarigen. Bij twijfel ID-controle aan de deur.</p>
+    </footer>
+  </main>
+
+  <!-- ============ STICKY CART / WHATSAPP CTA ============ -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-progress" id="cartProgress">
+      <div class="progress-text" id="progressText">Voeg <strong>€20</strong> toe voor je eerste bestelling</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="cart-row">
+      <button class="cart-summary" id="cartSummary" aria-label="Bekijk winkelmandje">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cartCount">0</span>
+        <span class="cart-total" id="cartTotal">€0,00</span>
+      </button>
+      <button class="cta cta-whatsapp cta-glow" id="checkoutBtn" disabled>
+        <span class="cta-icon">⚡</span>
+        <span>Bestel via WhatsApp</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>🛒 Jouw bestelling</h3>
+      <button class="drawer-close" id="drawerClose" aria-label="Sluit">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+    <div class="drawer-foot" id="drawerFoot"></div>
+  </aside>
+
+  <!-- ============ ORDER BUILDER (BOTTOM SHEET) ============ -->
+  <div class="builder-overlay" id="builderOverlay"></div>
+  <aside class="builder-sheet" id="builderSheet" role="dialog" aria-modal="true" aria-labelledby="builderTitle" aria-hidden="true">
+    <div class="builder-handle" aria-hidden="true"></div>
+
+    <header class="builder-head">
+      <div>
+        <h2 id="builderTitle">Stel je bestelling samen</h2>
+        <p class="builder-sub">2 stappen · klaar in 30 sec</p>
+      </div>
+      <button class="builder-close" id="builderClose" aria-label="Sluit menu">✕</button>
+    </header>
+
+    <div class="builder-body">
+      <div class="test-badge" id="testBadge" hidden>
+        🧪 <strong>TEST MODUS</strong>
+      </div>
+
+      <button type="button" class="popular-pick" id="popularPick">
+        <div class="popular-pick-main">
+          <span class="popular-pick-title">⭐ Meest gekozen</span>
+          <span class="popular-pick-detail">Party Starter + Chips + Bier</span>
+        </div>
+        <span class="popular-pick-price"><strong>€59,90</strong></span>
+      </button>
+
+      <section class="builder-section">
+        <h3 class="builder-step"><span class="step-dot">1</span> Kies je bundle</h3>
+        <div class="builder-bundles" id="builderBundles"></div>
+      </section>
+
+      <section class="builder-section">
+        <h3 class="builder-step"><span class="step-dot">2</span> Extra's <span class="builder-step-opt">optioneel</span></h3>
+        <div class="builder-extras" id="builderExtras"></div>
+      </section>
+    </div>
+
+    <footer class="builder-foot">
+      <div class="builder-totals">
+        <div class="builder-total-row">
+          <span>Totaal</span>
+          <strong id="builderTotal">€49,00</strong>
+        </div>
+      </div>
+      <button type="button" class="cta cta-whatsapp cta-glow builder-go" id="builderGo">
+        <span class="cta-icon">⚡</span>
+        <span id="builderGoLabel">Ga door naar WhatsApp</span>
+      </button>
+    </footer>
+  </aside>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
