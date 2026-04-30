@@ -1,109 +1,94 @@
-# 🌙 NIGHTDROP
+# NachtDrop - Drank & Snacks Nachtbezorging Nijmegen
 
-Late-night delivery webshop voor Nijmegen. Bier · Sterke drank · Snacks · WhatsApp-only ordering met cash bij levering.
+Mobile-first webshop voor nachtbezorging in Nijmegen. Bier, wijn, shots en snacks. Bezorgd binnen 30-60 min via WhatsApp checkout.
 
-## ⚡ Quick start
+## Features
 
-Geen build, geen dependencies — gewoon open `index.html`.
+- **App-style multi-page navigation** - bottom tab bar met 6 categorien (Home, Deals, Drank, Snacks, Fris, Meer)
+- **Cart systeem** - localStorage persistence, quantity controls, live totals
+- **WhatsApp checkout** - automatisch ingevuld bericht met items, aantallen, totaal
+- **Live opening status** - real-time countdown en gesloten/open badge
+- **Flash bar** - urgentie banner als < 60 min tot sluiten
+- **Progress bar** - moedig aan om over te boeken naar gratis bezorging
+- **JSON-LD structured data** - `FoodEstablishment` schema voor Google
+- **SEO geoptimaliseerd** - meta tags, OpenGraph, alt teksten, canonical URL
+- **Responsive** - mobile-first, schalt naar desktop met float button
 
-```bash
-# lokaal serveren (optioneel, anders dubbelklik index.html)
-npx serve .
-# of
-python -m http.server 8000
-```
+## Files
 
-## 🔧 Configuratie
+- `index.html` - structuur + JSON-LD
+- `style.css` - alle styling
+- `app.js` - cart logica, rendering, navigatie, countdown
+- `netlify.toml` - deployment config
 
-Open `app.js` en pas het `CONFIG` object aan (regel ~12):
+## Pages
+
+| Tab     | Inhoud                                        |
+|---------|-----------------------------------------------|
+| Home    | Hero, menu cards, top bundles, top bier, FAQ  |
+| Deals   | Alle bundels (Quick Fix, Party Starter, etc)  |
+| Drank   | Bier, wijn, prosecco, shots, sterke drank     |
+| Snacks  | Chips, chocolade, snoep, ijs                  |
+| Fris    | Frisdrank, water, energy drinks               |
+| Meer    | Accessoires, info, FAQ, bezorggebied          |
+
+## Bedrijfsregels
+
+- Min. order: EUR 30
+- Bezorgkosten: EUR 5 (gratis vanaf EUR 50)
+- Openingstijden: Ma-Do 20:00-04:00 / Vr-Za 20:00-05:30 / Zo 20:00-04:00
+- Bezorggebied: Heel Nijmegen + omliggende wijken
+- Betaling: cash of pin bij de deur
+- 18+ verplicht voor alcohol (ID controle)
+- Geen afhaallocatie - alleen bezorging
+
+## Configuratie
+
+In `app.js` bovenaan:
 
 ```js
-const CONFIG = {
-  whatsapp:    '31612345678',  // ← jouw WhatsApp nummer (zonder +)
-  minOrder:    20,             // minimum bestelwaarde
-  deliveryFee: 5,              // bezorgkosten
-  freeFrom:    50,             // gratis vanaf
-  openHour:    22,             // 22:00
-  closeHour:   4,              // 04:00
-  city:        'Nijmegen',
-};
+var WA_NUMBER = '31612345678';  // WhatsApp nummer (zonder +)
+var MIN_ORDER = 30;             // Min. bestelbedrag
+var FREE_SHIP = 50;             // Gratis bezorging vanaf
+var SHIP_COST = 5;              // Bezorgkosten standaard
 ```
 
-## 📦 Producten aanpassen
+## Lokaal draaien
 
-In `app.js` staan 4 catalogi:
-
-| Variabele  | Type                | Tip                                            |
-|------------|---------------------|------------------------------------------------|
-| `BUNDLES`  | hero bundels        | Houd ≤ 4 stuks; minstens 1 met `badge: 'best'` |
-| `QUICK`    | snel-kiezen combos  | Onder de €30 voor impulskopen                  |
-| `DRANK`    | losse drank         | Voeg `flag: 'hot' / 'deal' / 'new'` toe        |
-| `SNACKS`   | snacks & extras     | Lage marges, hoge AOV-impact                   |
-
-Velden:
-- `id` (uniek), `name`, `emoji`, `price` (verplicht)
-- `oldPrice` → toont doorgestreepte prijs + besparing
-- `stock` ≤ 8 → toont "Nog X beschikbaar" scarcity-pill
-- `flag` → label op de afbeelding
-
-## 🚀 Bestel-flow (2 klikken naar WhatsApp)
-
-Hero CTA `⚡ Bestel in 30 seconden` → opent een bottom-sheet met:
-
-1. **Bundle** (verplicht, default Party Starter): Quick Fix €29 · Party Starter €49 🔥 · Afterparty Box €69
-2. **Extra's** (optioneel) met +/− knoppen: Chips €4,95 · Fris €3,95 · Bier €5,95
-3. **⭐ Neem meest gekozen** knop = Party Starter + Chips + Bier (€59,90, 1 tik)
-4. `Ga door naar WhatsApp` → opent `wa.me` met volledig ingevuld bericht (bundle + extra's + totaal + adres-veld + Tikkie/contant)
-
-De sticky cart-bar's `Bestel`-knop opent ook automatisch deze builder als de cart leeg is, zodat één entry-point altijd werkt.
-
-## 🧪 Testmodus
-
-Twee manieren om te activeren:
-
-- **URL-param**: voeg `?test=1` toe (bv. `http://localhost:5173/?test=1`)
-- **Logo 5× tappen** binnen 1.8 sec — werkt ook live in productie
-
-Wanneer actief:
-- Geel/rode 🧪 TEST MODUS-banner bovenaan de builder
-- Het WhatsApp-bericht krijgt prefix `🧪 TEST BESTELLING`
-- Adres wordt vervangen door `Teststraat 123, Nijmegen`
-- CTA-label verandert naar `Verstuur TEST naar WhatsApp`
-
-Test scenario's:
-- alleen bundle (extras allemaal 0)
-- bundle + extra's (gebruik "Neem meest gekozen")
-- elke bundle om te checken dat totalen kloppen
-
-## 🎯 Conversion features (al ingebouwd)
-
-- **Sticky urgency bar** met live countdown naar 04:00
-- **Live ticker** met "Lisa uit Lent bestelde…" social proof
-- **Dynamische drukte counter** ("12 mensen bestellen nu")
-- **Scarcity** — voorraad daalt over tijd ("Nog 6 beschikbaar")
-- **Sticky cart bar** met progress naar gratis bezorging
-- **AOV upsells** in cart drawer onder €50
-- **1-click WhatsApp** vanaf elke knop met vooraf-ingevulde bestelling
-- **Anchor pricing** (oude prijs doorgestreept + procent korting)
-- **Trust badges** (cash bij levering, 4.8/5, 30 min)
-- **Open/Closed status pill** synced met openingstijden
-- **App-level UX** — pop-animaties, glow CTAs, bump-effect, smooth tabs
-- **Persistent cart** via `localStorage`
-
-## 📂 Files
-
-```
-NIGHTDROP/
-├── index.html    # structuur
-├── style.css     # dark neon theme + animaties
-├── app.js        # producten, cart, WhatsApp, urgency
-└── README.md     # dit bestand
+```bash
+# Geen build nodig - puur statische HTML/CSS/JS
+# Open een lokale server, bijv:
+python -m http.server 5173
+# of
+npx http-server -p 5173
 ```
 
-## 🚀 Deploy
+Open `http://localhost:5173` in je browser.
 
-Werkt overal als statische site (Netlify, Vercel, Cloudflare Pages, GitHub Pages). Zip en upload, of `git push`.
+## Deployment
 
-## ⚠️ Disclaimer
+Push naar GitHub en koppel aan Netlify, Vercel of Cloudflare Pages voor auto-deploy.
 
-Dit project promoot legit late-night delivery. Pas de copy aan op jouw lokale wetgeving (verkoop alcohol aan 18+, identiteitsverificatie, etc.).
+```bash
+git push origin main
+```
+
+## SEO checklist
+
+- [x] Meta title + description
+- [x] OpenGraph tags
+- [x] Canonical URL
+- [x] JSON-LD FoodEstablishment schema
+- [x] Semantic HTML (article, nav, section, footer)
+- [x] Mobile-first responsive
+- [x] Geen console errors
+- [x] Geen broken characters
+- [x] Aria labels op alle interactive buttons
+
+## Te doen voor live
+
+1. Vervang `WA_NUMBER` met echt WhatsApp nummer
+2. Vervang `https://nachtdrop.nl` placeholder met echte domein in `index.html` (3 plekken: canonical, og:url, JSON-LD url)
+3. Voeg een echte `og.jpg` toe (1200x630) voor social previews
+4. Update prijzen / producten in `app.js` (BUNDLES, BIER, WIJN, etc.)
+5. Test WhatsApp link op mobiel + desktop
